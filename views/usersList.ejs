@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="/assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <%- include('partials/head') %>
+    <style>
+      .user-card {
+        transition: transform 0.2s;
+      }
+      .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+        <%- include('partials/sidebar') %>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+          <%- include('partials/navbar') %>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold"><span class="text-muted fw-light">Admin /</span> Users List (Box Format)</h4>
+                <a href="/add-user" class="btn btn-primary">Add New User</a>
+              </div>
+
+              <div class="row">
+                <% if (users && users.length > 0) { %>
+                  <% users.forEach(user => { %>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                      <div class="card h-100 user-card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center mb-3">
+                            <div class="avatar avatar-lg me-3">
+                              <span class="avatar-initial rounded-circle bg-label-primary">
+                                <%= user.fullname.charAt(0).toUpperCase() %>
+                              </span>
+                            </div>
+                            <div>
+                              <h5 class="card-title mb-0"><%= user.fullname %></h5>
+                              <small class="text-muted"><%= user.company %></small>
+                            </div>
+                          </div>
+                          <p class="card-text">
+                            <i class="bx bx-envelope me-1"></i> <%= user.email %><br>
+                            <i class="bx bx-phone me-1"></i> <%= user.phone %>
+                          </p>
+                          <% if (user.message) { %>
+                            <div class="alert alert-light border mb-3" style="font-size: 0.85rem;">
+                              <strong>Message:</strong> <%= user.message %>
+                            </div>
+                          <% } %>
+                          <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                            <span class="badge bg-label-info">ID: <%= user._id.toString().slice(-6) %></span>
+                            <div class="dropdown">
+                              <button class="btn p-0 dropdown-toggle hide-arrow" type="button" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                <a class="dropdown-item text-danger" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% }) %>
+                <% } else { %>
+                  <div class="col-12 text-center py-5">
+                    <img src="/assets/img/illustrations/man-with-laptop-light.png" height="150" alt="No data" class="mb-4">
+                    <h5>No users found in the database.</h5>
+                    <p>Start by adding some users to see them here.</p>
+                    <a href="/add-user" class="btn btn-primary">Go to Add User</a>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <%- include('partials/footer') %>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <%- include('partials/scripts') %>
+  </body>
+</html>
